@@ -1,0 +1,14 @@
+.github/workflows/ci.yml
+  h_e90f0321dd544b 31-32,127
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b14f775bf74f5793c5d9c50d39f46bf55b07f1f6",
+  "prompts": {},
+  "humans": {
+    "h_e90f0321dd544b": {
+      "author": "001005HS <99410048+001005HS@users.noreply.github.com>"
+    }
+  }
+}
