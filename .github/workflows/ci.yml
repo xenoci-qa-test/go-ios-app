@@ -15,20 +15,21 @@ concurrency:
 jobs:
   ios-latest:
     name: Unit Tests (iOS 26.2, Xcode 26.2)
-    runs-on: macOS-26
+    runs-on: xenoci-macos
     timeout-minutes: 20
     env:
-      DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
     steps:
       - uses: actions/checkout@v4
       - name: Boot simulator
         run: |
           xcrun simctl boot "iPhone 17 Pro"
           xcrun simctl bootstatus "iPhone 17 Pro" -b
+          xcrun simctl list runtimes
       - name: Run Tests
         run: |
-          .scripts/build.sh -s "Pulse" -d "OS=26.2,name=iPhone 17 Pro"
-          .scripts/build.sh -s "PulseUI" -d "OS=26.2,name=iPhone 17 Pro"
+          .scripts/build.sh -s "Pulse" -d "platform=iOS Simulator,OS=26.5,name=iPhone 17 Pro"
+          .scripts/build.sh -s "PulseUI" -d "platform=iOS Simulator,OS=26.5,name=iPhone 17 Pro"
   visionos-build:
     name: Build (${{ matrix.destination }}, Xcode 26.2)
     runs-on: macOS-26
@@ -108,21 +109,22 @@ jobs:
         run: swift build
   build-demo-ios:
     name: Build Demo (iOS)
-    runs-on: macOS-26
+    runs-on: xenoci-macos
     timeout-minutes: 20
     env:
-      DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
     steps:
       - uses: actions/checkout@v4
       - name: Boot simulator
         run: |
           xcrun simctl boot "iPhone 17 Pro"
           xcrun simctl bootstatus "iPhone 17 Pro" -b
+          xcrun simctl list runtimes
       - name: Build Demo
         run: |
           cd Demo
           set -o pipefail
-          xcodebuild build -scheme "Pulse Demo iOS" -destination "OS=26.2,name=iPhone 17 Pro" | xcpretty
+          xcodebuild build -scheme "Pulse Demo iOS" -destination "platform=iOS Simulator,OS=26.5,name=iPhone 17 Pro" | xcpretty
   build-demo-tvos:
     name: Build Demo (tvOS)
     runs-on: macOS-26
